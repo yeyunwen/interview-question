@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <button class="begin">开始任务</button>
+    <button class="pause">暂停任务</button>
+    <script type="module">
+      import { processTasks } from "./index.js";
+      const begin = document.querySelector(".begin");
+      const pause = document.querySelector(".pause");
+
+      const tasks = new Array(5).fill(0).map((_, index) => {
+        return () => {
+          console.log(`任务${index}开始`);
+          return new Promise((resolve) => {
+            setTimeout(() => {
+              console.log(`任务${index}完成`);
+              resolve(index);
+            }, 2000);
+          });
+        };
+      });
+
+      const processor = processTasks(...tasks);
+
+      begin.addEventListener("click", async () => {
+        console.log("点击开始任务");
+        const result = await processor.start();
+        console.log("所有任务完成", result);
+      });
+
+      pause.addEventListener("click", () => {
+        console.log("点击暂停任务");
+        processor.pause();
+      });
+    </script>
+  </body>
+</html>
