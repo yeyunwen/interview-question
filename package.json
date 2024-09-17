@@ -1,0 +1,16 @@
+{
+  "name": "interview-question",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "new": "node scripts/new.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@inquirer/prompts": "^6.0.1"
+  }
+}
