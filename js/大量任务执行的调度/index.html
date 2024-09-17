@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      #bar {
+        width: 0;
+        height: 10px;
+        background-color: red;
+        animation: a1 2s linear infinite;
+      }
+
+      @keyframes a1 {
+        0% {
+          width: 0;
+        }
+        50% {
+          width: 100%;
+        }
+        100% {
+          width: 0;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <button class="btn">执行任务</button>
+    <p id="waiting">等待执行</p>
+    <div id="bar"></div>
+    <script type="module">
+      import { runTask } from "./index.js";
+
+      const btn = document.querySelector(".btn");
+      const text = document.querySelector("#waiting");
+
+      const delay = (duration = 5) => {
+        const start = Date.now();
+        while (Date.now() - start < duration) {}
+      };
+
+      const n = 1000;
+      const tasks = new Array(n).fill(delay);
+
+      btn.addEventListener("click", async () => {
+        text.textContent = "执行中";
+        console.log(text.textContent);
+
+        const start = Date.now();
+
+        await Promise.all(tasks.map((t) => runTask(t)));
+
+        text.textContent = `执行完毕，耗时${Date.now() - start}ms`;
+      });
+    </script>
+  </body>
+</html>
