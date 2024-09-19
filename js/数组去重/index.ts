@@ -2,7 +2,7 @@
  * 数组去重
  * 两个属性相同的对象也认为是重复的
  */
-const uniqueArray = (arr: any[]) => {
+export const uniqueArray = (arr: any[]) => {
   const result: any[] = [];
 
   outer: for (const item of arr) {
@@ -41,33 +41,6 @@ const equals = (v1: any, v2: any) => {
   }
   return true;
 };
-
-const test = () => {
-  const a = [
-    {
-      id: 1,
-      name: "张三",
-    },
-    {
-      id: 2,
-      name: "李四",
-    },
-    {
-      id: 1,
-      name: "张三",
-    },
-    {
-      id: 2,
-      name: "李四",
-      age: 18,
-    },
-  ];
-
-  const b = uniqueArray(a);
-  console.log(b);
-};
-
-test();
 
 // const uniqueArray = (arr: any[]) => {
 //   return [...new Set(arr)];
