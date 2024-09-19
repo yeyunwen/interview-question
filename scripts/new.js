@@ -18,6 +18,23 @@ const answer = await input({
   message: "请输入题目",
 });
 
+let needHtml;
+if (type === "js") {
+  needHtml = await select({
+    message: "是否需要html",
+    choices: [
+      {
+        name: "是",
+        value: true,
+      },
+      {
+        name: "否",
+        value: false,
+      },
+    ],
+  });
+}
+
 const __dirname = new URL(".", import.meta.url).pathname;
 const basePath = path.join(__dirname, "../");
 
@@ -36,4 +53,10 @@ if (!fs.existsSync(answerPath)) {
 
 if (type === "js") {
   fs.appendFileSync(path.join(answerPath, "index.js"), "");
+  if (needHtml) {
+    const htmlTemplate = fs.readFileSync(
+      path.join(basePath, "template", "index.html")
+    );
+    fs.appendFileSync(path.join(answerPath, "index.html"), htmlTemplate);
+  }
 }
