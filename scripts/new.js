@@ -24,12 +24,12 @@ if (type === "js") {
     message: "是否需要html",
     choices: [
       {
-        name: "是",
-        value: true,
-      },
-      {
         name: "否",
         value: false,
+      },
+      {
+        name: "是",
+        value: true,
       },
     ],
   });
