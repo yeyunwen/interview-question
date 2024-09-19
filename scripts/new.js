@@ -51,12 +51,23 @@ if (!fs.existsSync(answerPath)) {
   process.exit(1);
 }
 
-if (type === "js") {
-  fs.appendFileSync(path.join(answerPath, "index.js"), "");
-  if (needHtml) {
-    const htmlTemplate = fs.readFileSync(
-      path.join(basePath, "template", "index.html")
+const getTemplate = (fileName) => {
+  return fs.readFileSync(path.join(basePath, "template", fileName));
+};
+
+switch (type) {
+  case "js": {
+    fs.appendFileSync(path.join(answerPath, "index.ts"), "");
+    fs.appendFileSync(
+      path.join(answerPath, "index.test.ts"),
+      getTemplate("index.test.ts")
     );
-    fs.appendFileSync(path.join(answerPath, "index.html"), htmlTemplate);
+    if (needHtml) {
+      fs.appendFileSync(
+        path.join(answerPath, "index.html"),
+        getTemplate("index.html")
+      );
+    }
+    break;
   }
 }
