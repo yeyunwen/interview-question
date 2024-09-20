@@ -1,3 +1,8 @@
+// 思路
+// requestIdleCallback 回调中通过dealine.timeRemaining()判断当前渲染帧是否有剩余时间
+// requestAnimationFrame 回调中通过setTimeout(task, 16.6)判断当前渲染帧是否有剩余时间
+// 最后降级为setTimeout
+
 /**
  * 运行一个耗时任务
  * 如果需要异步执行，请返回Promise
@@ -36,11 +41,24 @@ const _runTask = (task, callback) => {
     requestAnimationFrame(frame);
   };
 
-  if (typeof requestIdleCallback === "function") {
-    _runTaskWithRequestIdleCallback(task, callback);
-  } else if (typeof requestAnimationFrame === "function") {
-    _runTaskWithRequestAnimationFrame(task, callback);
-  } else {
-    _runTaskWithSetTimeout(task, callback);
-  }
+  const _runTaskWebWorker = (task, callback) => {
+    const worker = new Worker("./worker.js");
+    worker.postMessage("test");
+    worker.onmessage = (e) => {
+      callback();
+    };
+  };
+
+  // if (typeof requestIdleCallback === "function") {
+  //   _runTaskWithRequestIdleCallback(task, callback);
+  // } else if (typeof requestAnimationFrame === "function") {
+  //   _runTaskWithRequestAnimationFrame(task, callback);
+  // } else if (typeof Worker === "function") {
+  //   _runTaskWebWorker(task, callback);
+  // } else {
+  setTimeout(() => {
+    task();
+    callback();
+  }, 16.6);
+  // }
 };
