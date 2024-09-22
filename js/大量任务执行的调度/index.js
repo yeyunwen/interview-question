@@ -49,16 +49,16 @@ const _runTask = (task, callback) => {
     };
   };
 
-  // if (typeof requestIdleCallback === "function") {
-  //   _runTaskWithRequestIdleCallback(task, callback);
-  // } else if (typeof requestAnimationFrame === "function") {
-  //   _runTaskWithRequestAnimationFrame(task, callback);
-  // } else if (typeof Worker === "function") {
-  //   _runTaskWebWorker(task, callback);
-  // } else {
-  setTimeout(() => {
-    task();
-    callback();
-  }, 16.6);
-  // }
+  if (typeof requestIdleCallback === "function") {
+    _runTaskWithRequestIdleCallback(task, callback);
+  } else if (typeof requestAnimationFrame === "function") {
+    _runTaskWithRequestAnimationFrame(task, callback);
+  } else if (typeof Worker === "function") {
+    _runTaskWebWorker(task, callback);
+  } else {
+    setTimeout(() => {
+      task();
+      callback();
+    }, 16.6);
+  }
 };
