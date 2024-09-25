@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      /* 问题，哪个元素长color会变红 */
+      /* 答案：
+      :first-child CSS 伪类表示在一组兄弟元素中的第一个元素。
+      所以会找到所以span，然后找到第一个span，然后把他的color变成红色。
+      第一个span里的子元素都会继承这个样式。但是a有默认的color，所以会把a的color没变红色。
+      */
+      span:first-child {
+        color: red;
+      }
+    </style>
+  </head>
+  <body>
+    <div>
+      <span>
+        第一个span
+        <a href="">我是a</a>
+      </span>
+      <span>第二个span</span>
+    </div>
+  </body>
+</html>
